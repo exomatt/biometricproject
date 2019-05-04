@@ -52,7 +52,7 @@ public class KMM {
         // łapiemy w rogu czyli 3
         for (int w = 1; w < table.length - 1; w++) {
             for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] == 1) {
+                if (table[w][h] > 0) {
                     if ((table[w - 1][h] > 0 && table[w + 1][h] > 0 && table[w][h - 1] > 0 && table[w][h + 1] > 0)
                             && (table[w - 1][h - 1] == 0 || table[w - 1][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h + 1] == 0))
                         table[w][h] = 3;
@@ -61,9 +61,8 @@ public class KMM {
         }
 
         // łapiemy czwórki
-
-        for (int w = 0; w < table.length; w++) {
-            for (int h = 0; h < table[0].length; h++) {
+        for (int h = 0; h < table[0].length; h++) {
+            for (int w = 0; w < table.length; w++) {
                 System.out.print(table[w][h]);
             }
             System.out.println("");
