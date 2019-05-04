@@ -2,31 +2,47 @@ package szkieletyzacja;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import static szkieletyzacja.KMM.copyImage;
 
 public class ACM {
     public BufferedImage crossingNumber(BufferedImage image) {
         BufferedImage copyImage = copyImage(image);
+        short tabMinucje[][] = new short[image.getWidth()][image.getHeight()];
         for (int w = 1; w < image.getWidth() - 1; w++) {
             for (int h = 1; h < image.getHeight() - 1; h++) {
                 Color color = new Color(image.getRGB(w, h));
                 if (color.getRed() == 0) {
                     int cn = countCN(image, w, h);
-                    if (cn == 1) {
-                        Color circleColor = new Color(0, 255, 0);
-                        copyImage = drawCircle(copyImage, w, h, circleColor);
-                    } else if (cn == 3) {
-                        Color circleColor = new Color(255, 0, 0);
-                        copyImage = drawCircle(copyImage, w, h, circleColor);
-                    } else if (cn == 4) {
-                        Color circleColor = new Color(0, 0, 255);
-                        copyImage = drawCircle(copyImage, w, h, circleColor);
+                    if (cn == 1) { //zakończenie
+                        tabMinucje[w][h] = 1;
+                    } else if (cn == 3) { //rozgałęzienie
+                        tabMinucje[w][h] = 3;
+                    } else if (cn == 4) { //skrzyżowanie
+                        tabMinucje[w][h] = 4;
                     }
 
                 }
             }
         }
+        short[][] minutiaeFiltration = Filtration.minutiaeFiltration(tabMinucje);
+
+        for (int w = 1; w < minutiaeFiltration.length; w++) {
+            for (int h = 1; h < minutiaeFiltration[0].length; h++) {
+                if (minutiaeFiltration[w][h] == 1) { //zakończenie
+                    Color circleColor = new Color(0, 255, 0);
+                    copyImage = drawCircle(copyImage, w, h, circleColor);
+                } else if (minutiaeFiltration[w][h] == 3) { //rozgałęzienie
+                    Color circleColor = new Color(255, 0, 0);
+                    copyImage = drawCircle(copyImage, w, h, circleColor);
+                } else if (minutiaeFiltration[w][h] == 4) { //skrzyżowanie
+                    Color circleColor = new Color(0, 0, 255);
+                    copyImage = drawCircle(copyImage, w, h, circleColor);
+                }
+            }
+        }
+
         return copyImage;
     }
 
