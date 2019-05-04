@@ -80,13 +80,64 @@ public class KMM {
         }
 
         // wypisanie
+        printTable(table);
+
+        // usuwanie czwórek
+        for (int w = 1; w < table.length - 1; w++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
+                if (table[w][h] == 4)
+                    table[w][h] = 0;
+            }
+        }
+        // wypisanie
+        printTable(table);
+
+
+        // usuwanie dwójek  na podstawie wag
+        for (int w = 1; w < table.length - 1; w++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
+                if (table[w][h] == 2) {
+                    int sum = sumOfPixels(table, w, h);
+                    if (deleteList.contains(sum)) {
+                        table[w][h] = 0;
+                    } else {
+                        table[w][h] = 1;
+                    }
+                }
+            }
+        }
+
+        // wypisanie
+        printTable(table);
+        System.out.println(" ");
+
+        // usuwanie trojek  na podstawie wag
+        for (int w = 1; w < table.length - 1; w++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
+                if (table[w][h] == 3) {
+                    int sum = sumOfPixels(table, w, h);
+                    if (deleteList.contains(sum)) {
+                        table[w][h] = 0;
+                    } else {
+                        table[w][h] = 1;
+                    }
+                }
+            }
+        }
+
+        // wypisanie
+        printTable(table);
+        return null;
+    }
+
+    private void printTable(int[][] table) {
         for (int h = 0; h < table[0].length; h++) {
             for (int w = 0; w < table.length; w++) {
                 System.out.print(table[w][h]);
             }
             System.out.println("");
         }
-        return null;
+        System.out.println(" ");
     }
 
     private int sumOfPixels(int[][] table, int w, int h) {
