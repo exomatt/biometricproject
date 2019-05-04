@@ -27,122 +27,122 @@ public class KMM {
 
 
     private List<Integer> posibleFourList = new ArrayList<Integer>(Arrays.asList(
-            3, 6, 12, 25, 48, 96, 192, 129,
+            3, 6, 12, 24, 48, 96, 192, 129,
             7, 14, 28, 56, 112, 224, 193, 131,
             15, 30, 60, 120, 240, 225, 195, 135)
     );
 
     public BufferedImage kmmAlgorithm(BufferedImage image) {
-        int table[][] = new int[image.getWidth()][image.getHeight()];
-        // łapiemy początkowe czarne
-        for (int w = 0; w < table.length; w++) {
-            for (int h = 0; h < table[0].length; h++) {
-                Color color = new Color(image.getRGB(w, h));
-                if (color.getRed() == 0)
-                    table[w][h] = 1;
-                else table[w][h] = 0;
-            }
-        }
-        // łapiemy dwójki
-        for (int w = 1; w < table.length - 1
-                ; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] == 1) {
-                    if (table[w - 1][h - 1] == 0 ||
-                            table[w - 1][h] == 0 || table[w - 1][h + 1] == 0 ||
-                            table[w][h - 1] == 0 || table[w][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h] == 0 || table[w + 1][h + 1] == 0)
-                        table[w][h] = 2;
-                }
-            }
-        }
-
-        // łapiemy w rogu czyli 3
-        for (int w = 1; w < table.length - 1; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] > 0) {
-                    if ((table[w - 1][h] > 0 && table[w + 1][h] > 0 && table[w][h - 1] > 0 && table[w][h + 1] > 0)
-                            && (table[w - 1][h - 1] == 0 || table[w - 1][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h + 1] == 0))
-                        table[w][h] = 3;
-                }
-            }
-        }
-
-        // łapiemy czwórki
-        for (int w = 1; w < table.length - 1; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] > 0) {
-                    int sum = sumOfPixels(table, w, h);
-                    if (posibleFourList.contains(sum)) {
-                        table[w][h] = 4;
-                    }
-                }
-            }
-        }
-
-        // wypisanie
-        printTable(table);
-
-        // usuwanie czwórek
-        for (int w = 1; w < table.length - 1; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] == 4)
-                    table[w][h] = 0;
-            }
-        }
-        // wypisanie
-        printTable(table);
-
-
-        // usuwanie dwójek  na podstawie wag
-        for (int w = 1; w < table.length - 1; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] == 2) {
-                    int sum = sumOfPixels(table, w, h);
-                    if (deleteList.contains(sum)) {
-                        table[w][h] = 0;
-                    } else {
+        boolean anyChange = true;
+        while (anyChange) {
+            anyChange = false;
+            int table[][] = new int[image.getWidth()][image.getHeight()];
+            // łapiemy początkowe czarne
+            for (int w = 0; w < table.length; w++) {
+                for (int h = 0; h < table[0].length; h++) {
+                    Color color = new Color(image.getRGB(w, h));
+                    if (color.getRed() == 0)
                         table[w][h] = 1;
+                    else table[w][h] = 0;
+                }
+            }
+            // łapiemy dwójki
+            for (int w = 1; w < table.length - 1
+                    ; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] == 1) {
+                        if (table[w - 1][h - 1] == 0 ||
+                                table[w - 1][h] == 0 || table[w - 1][h + 1] == 0 ||
+                                table[w][h - 1] == 0 || table[w][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h] == 0 || table[w + 1][h + 1] == 0)
+                            table[w][h] = 2;
                     }
                 }
             }
-        }
 
-        // wypisanie
-        printTable(table);
-        System.out.println(" ");
+            // łapiemy w rogu czyli 3
+            for (int w = 1; w < table.length - 1; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] > 0) {
+                        if ((table[w - 1][h] > 0 && table[w + 1][h] > 0 && table[w][h - 1] > 0 && table[w][h + 1] > 0)
+                                && (table[w - 1][h - 1] == 0 || table[w - 1][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h + 1] == 0))
+                            table[w][h] = 3;
+                    }
+                }
+            }
 
-        // usuwanie trojek  na podstawie wag
-        for (int w = 1; w < table.length - 1; w++) {
-            for (int h = 1; h < table[0].length - 1; h++) {
-                if (table[w][h] == 3) {
-                    int sum = sumOfPixels(table, w, h);
-                    if (deleteList.contains(sum)) {
+            // łapiemy czwórki
+            for (int w = 1; w < table.length - 1; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] > 0) {
+                        int sum = sumOfPixels(table, w, h);
+                        if (posibleFourList.contains(sum)) {
+                            table[w][h] = 4;
+                        }
+                    }
+                }
+            }
+
+
+            // usuwanie czwórek
+            for (int w = 1; w < table.length - 1; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] == 4) {
+                        anyChange = true;
                         table[w][h] = 0;
-                    } else {
-                        table[w][h] = 1;
                     }
                 }
             }
-        }
 
-        // wypisanie
-        printTable(table);
 
-        for (int w = 0; w < table.length; w++) {
-            for (int h = 0; h < table[0].length; h++) {
-                if (table[w][h] == 1)
-                    image.setRGB(w, h, Color.black.getRGB());
-                else
-                    image.setRGB(w, h, Color.white.getRGB());
+            // usuwanie dwójek  na podstawie wag
+            for (int w = 1; w < table.length - 1; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] == 2) {
+                        int sum = sumOfPixels(table, w, h);
+                        if (deleteList.contains(sum)) {
+                            anyChange = true;
+                            table[w][h] = 0;
+                        } else {
+                            table[w][h] = 1;
+                        }
+                    }
+                }
+            }
 
+
+            // usuwanie trojek  na podstawie wag
+            for (int w = 1; w < table.length - 1; w++) {
+                for (int h = 1; h < table[0].length - 1; h++) {
+                    if (table[w][h] == 3) {
+                        int sum = sumOfPixels(table, w, h);
+                        if (deleteList.contains(sum)) {
+                            anyChange = true;
+                            table[w][h] = 0;
+                        } else {
+                            table[w][h] = 1;
+                        }
+                    }
+                }
+            }
+
+
+            for (int w = 0; w < table.length; w++) {
+                for (int h = 0; h < table[0].length; h++) {
+                    if (table[w][h] == 1)
+                        image.setRGB(w, h, Color.black.getRGB());
+                    else
+                        image.setRGB(w, h, Color.white.getRGB());
+
+                }
             }
         }
         return image;
     }
 
     private void printTable(int[][] table) {
-        for (int h = 0; h < table[0].length; h++) {
-            for (int w = 0; w < table.length; w++) {
+        for (int w = 0; w < table.length; w++) {
+            for (int h = 0; h < table[0].length; h++) {
+
                 System.out.print(table[w][h]);
             }
             System.out.println("");
