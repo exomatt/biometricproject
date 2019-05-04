@@ -4,6 +4,8 @@
 
 package gui;
 
+import binarization.BinarizationOperations;
+import binarization.ColorChanger;
 import imageoperation.ImageReaderSaver;
 import org.jdesktop.layout.GroupLayout;
 
@@ -11,9 +13,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
+import static szkieletyzacja.KMM.copyImage;
 
 /**
  * @author exo
@@ -74,6 +77,19 @@ public class MainGui extends JFrame {
         }
     }
 
+    private void menuItemToGrayActionPerformed(ActionEvent e) {
+        ColorChanger changer = new ColorChanger();
+        originalImage = changer.changeToGrey(originalImage, 3);
+        imageLabel.setIcon(new ImageIcon(originalImage));
+    }
+
+    private void menuItemOtsuActionPerformed(ActionEvent e) {
+        BinarizationOperations binarizationOperations = new BinarizationOperations();
+        int otsuThreshold = binarizationOperations.thresholdOtsu(copyImage(originalImage));
+        originalImage = binarizationOperations.userValueBinarization(copyImage(originalImage), otsuThreshold);
+        imageLabel.setIcon(new ImageIcon(originalImage));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - exo
@@ -81,6 +97,12 @@ public class MainGui extends JFrame {
         menu1 = new JMenu();
         menuItemLoadFile = new JMenuItem();
         menuItemSaveFile = new JMenuItem();
+        menu2 = new JMenu();
+        menuItemToGray = new JMenuItem();
+        menu3 = new JMenu();
+        menuItemOtsu = new JMenuItem();
+        menu4 = new JMenu();
+        menuItem1 = new JMenuItem();
         scrollPane1 = new JScrollPane();
         imageLabel = new JLabel();
 
@@ -96,23 +118,47 @@ public class MainGui extends JFrame {
 
                 //---- menuItemLoadFile ----
                 menuItemLoadFile.setText("load file");
-                menuItemLoadFile.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        menuItemLoadFileActionPerformed(e);
-                    }
-                });
+                menuItemLoadFile.addActionListener(e -> menuItemLoadFileActionPerformed(e));
                 menu1.add(menuItemLoadFile);
 
                 //---- menuItemSaveFile ----
                 menuItemSaveFile.setText("save file");
-                menuItemSaveFile.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        menuItemSaveFileActionPerformed(e);
-                    }
-                });
+                menuItemSaveFile.addActionListener(e -> menuItemSaveFileActionPerformed(e));
                 menu1.add(menuItemSaveFile);
             }
             menuBar1.add(menu1);
+
+            //======== menu2 ========
+            {
+                menu2.setText("color change");
+
+                //---- menuItemToGray ----
+                menuItemToGray.setText("to Averange Gray ");
+                menuItemToGray.addActionListener(e -> menuItemToGrayActionPerformed(e));
+                menu2.add(menuItemToGray);
+            }
+            menuBar1.add(menu2);
+
+            //======== menu3 ========
+            {
+                menu3.setText("binarization");
+
+                //---- menuItemOtsu ----
+                menuItemOtsu.setText("otsu");
+                menuItemOtsu.addActionListener(e -> menuItemOtsuActionPerformed(e));
+                menu3.add(menuItemOtsu);
+            }
+            menuBar1.add(menu3);
+
+            //======== menu4 ========
+            {
+                menu4.setText("szkieletyzacja");
+
+                //---- menuItem1 ----
+                menuItem1.setText("KMM");
+                menu4.add(menuItem1);
+            }
+            menuBar1.add(menu4);
         }
         setJMenuBar(menuBar1);
 
@@ -148,6 +194,12 @@ public class MainGui extends JFrame {
     private JMenu menu1;
     private JMenuItem menuItemLoadFile;
     private JMenuItem menuItemSaveFile;
+    private JMenu menu2;
+    private JMenuItem menuItemToGray;
+    private JMenu menu3;
+    private JMenuItem menuItemOtsu;
+    private JMenu menu4;
+    private JMenuItem menuItem1;
     private JScrollPane scrollPane1;
     private JLabel imageLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables

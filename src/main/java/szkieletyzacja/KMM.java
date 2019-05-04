@@ -26,9 +26,13 @@ public class KMM {
             247, 248, 249, 251, 252, 253, 254, 255));
 
     public BufferedImage kmmAlgorithm(BufferedImage image) {
-        for (int w = 0; w < image.getWidth(); w++) {
-            for (int h = 0; h < image.getHeight(); h++) {
-
+        int table[][] = new int[image.getWidth()][image.getWidth()];
+        for (int w = 0; w < table.length; w++) {
+            for (int h = 0; h < table[0].length; h++) {
+                Color color = new Color(image.getRGB(w, h));
+                if (color.getRed() == 255)
+                    table[w][h] = 1;
+                else table[w][h] = 0;
             }
         }
 
