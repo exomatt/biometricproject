@@ -26,20 +26,20 @@ public class KMM {
             247, 248, 249, 251, 252, 253, 254, 255));
 
     public BufferedImage kmmAlgorithm(BufferedImage image) {
-        int table[][] = new int[image.getWidth()][image.getWidth()];
+        int table[][] = new int[image.getWidth()][image.getHeight()];
         // łapiemy początkowe czarne
-        for (int w = 0; w < table.length - 1; w++) {
-            for (int h = 0; h < table[0].length - 1; h++) {
+        for (int w = 0; w < table.length; w++) {
+            for (int h = 0; h < table[0].length; h++) {
                 Color color = new Color(image.getRGB(w, h));
-                if (color.getRed() == 255)
+                if (color.getRed() == 0)
                     table[w][h] = 1;
                 else table[w][h] = 0;
             }
         }
         // łapiemy dwójki
-        for (int w = 1; w < table.length - 2
+        for (int w = 1; w < table.length - 1
                 ; w++) {
-            for (int h = 1; h < table[0].length - 2; h++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
                 if (table[w][h] == 1) {
                     if (table[w - 1][h - 1] == 0 ||
                             table[w - 1][h] == 0 || table[w - 1][h + 1] == 0 ||
@@ -50,9 +50,8 @@ public class KMM {
         }
 
         // łapiemy w rogu czyli 3
-        for (int w = 1; w < table.length - 2
-                ; w++) {
-            for (int h = 1; h < table[0].length - 2; h++) {
+        for (int w = 1; w < table.length - 1; w++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
                 if (table[w][h] == 1) {
                     if ((table[w - 1][h] > 0 && table[w + 1][h] > 0 && table[w][h - 1] > 0 && table[w][h + 1] > 0)
                             && (table[w - 1][h - 1] == 0 || table[w - 1][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h + 1] == 0))
