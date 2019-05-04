@@ -1,0 +1,28 @@
+JFDML JFormDesigner: "6.0.6.2.195" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:171:p, comp scrollPane1:::p:503:p, space :p:64:p, par l:::p {comp thresholdTextlabel::::113:x, comp thresholdLabel::::113:x}, space ::72:x}}"
+			"$verticalGroup": "par l {seq t {space ::31:x, comp scrollPane1:::p:353:p, space :p:22:p}, seq l {space :p:66:p, comp thresholdTextlabel:::p:37:p, space :::p, comp thresholdLabel:::p:45:p, space ::252:x}}"
+		} ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "labelImage"
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "thresholdTextlabel"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "thresholdLabel"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 5 )
+			"size": new java.awt.Dimension( 925, 435 )
+		} )
+	}
+}

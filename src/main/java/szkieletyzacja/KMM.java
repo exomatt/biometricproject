@@ -26,7 +26,11 @@ public class KMM {
             247, 248, 249, 251, 252, 253, 254, 255));
 
     public BufferedImage kmmAlgorithm(BufferedImage image) {
+        for (int w = 0; w < image.getWidth(); w++) {
+            for (int h = 0; h < image.getHeight(); h++) {
 
+            }
+        }
 
         return null;
     }
