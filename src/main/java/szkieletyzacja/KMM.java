@@ -127,7 +127,17 @@ public class KMM {
 
         // wypisanie
         printTable(table);
-        return null;
+
+        for (int w = 0; w < table.length; w++) {
+            for (int h = 0; h < table[0].length; h++) {
+                if (table[w][h] == 1)
+                    image.setRGB(w, h, Color.black.getRGB());
+                else
+                    image.setRGB(w, h, Color.white.getRGB());
+
+            }
+        }
+        return image;
     }
 
     private void printTable(int[][] table) {

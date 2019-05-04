@@ -93,10 +93,8 @@ public class MainGui extends JFrame {
 
     private void menuItemKMMActionPerformed(ActionEvent e) {
         KMM kmm = new KMM();
-        BufferedImage bufferedImage = kmm.kmmAlgorithm(copyImage(originalImage));
-        ImageShow imageShow = new ImageShow(bufferedImage);
-        imageShow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        imageShow.setVisible(true);
+        originalImage = kmm.kmmAlgorithm(copyImage(originalImage));
+        imageLabel.setIcon(new ImageIcon(originalImage));
     }
 
 
