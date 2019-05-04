@@ -7,7 +7,6 @@ package gui;
 import binarization.BinarizationOperations;
 import binarization.ColorChanger;
 import imageoperation.ImageReaderSaver;
-import org.jdesktop.layout.GroupLayout;
 import szkieletyzacja.ACM;
 import szkieletyzacja.KMM;
 
@@ -197,16 +196,16 @@ public class MainGui extends JFrame {
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
                 contentPaneLayout.createParallelGroup()
-                        .add(contentPaneLayout.createSequentialGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .add(scrollPane1, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 600, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(467, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
                 contentPaneLayout.createParallelGroup()
-                        .add(contentPaneLayout.createSequentialGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .add(scrollPane1, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(205, Short.MAX_VALUE))
         );
         pack();
