@@ -25,6 +25,13 @@ public class KMM {
             237, 239, 240, 241, 243, 244, 245, 246,
             247, 248, 249, 251, 252, 253, 254, 255));
 
+
+    private List<Integer> posibleFourList = new ArrayList<Integer>(Arrays.asList(
+            3, 6, 12, 25, 48, 96, 192, 129,
+            7, 14, 28, 56, 112, 224, 193, 131,
+            15, 30, 60, 120, 240, 225, 195, 135)
+    );
+
     public BufferedImage kmmAlgorithm(BufferedImage image) {
         int table[][] = new int[image.getWidth()][image.getHeight()];
         // łapiemy początkowe czarne
@@ -59,24 +66,58 @@ public class KMM {
                 }
             }
         }
+
+        // łapiemy czwórki
         for (int w = 1; w < table.length - 1; w++) {
             for (int h = 1; h < table[0].length - 1; h++) {
                 if (table[w][h] > 0) {
-
+                    int sum = sumOfPixels(table, w, h);
+                    if (posibleFourList.contains(sum)) {
+                        table[w][h] = 4;
+                    }
                 }
             }
-            // łapiemy czwórki
-
-
-            // wypisanie
-            for (int h = 0; h < table[0].length; h++) {
-                for (int w = 0; w < table.length; w++) {
-                    System.out.print(table[w][h]);
-                }
-                System.out.println("");
-            }
-            return null;
         }
+
+        // wypisanie
+        for (int h = 0; h < table[0].length; h++) {
+            for (int w = 0; w < table.length; w++) {
+                System.out.print(table[w][h]);
+            }
+            System.out.println("");
+        }
+        return null;
+    }
+
+    private int sumOfPixels(int[][] table, int w, int h) {
+        int sum = 0;
+
+        if (table[w - 1][h] > 0) {
+            sum += 1;
+        }
+        if (table[w - 1][h + 1] > 0) {
+            sum += 2;
+        }
+        if (table[w][h + 1] > 0) {
+            sum += 4;
+        }
+        if (table[w + 1][h + 1] > 0) {
+            sum += 8;
+        }
+        if (table[w + 1][h] > 0) {
+            sum += 16;
+        }
+        if (table[w + 1][h - 1] > 0) {
+            sum += 32;
+        }
+        if (table[w][h - 1] > 0) {
+            sum += 64;
+        }
+        if (table[w - 1][h - 1] > 0) {
+            sum += 128;
+        }
+        return sum;
+    }
 
     public static BufferedImage copyImage(BufferedImage source) {
         BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
