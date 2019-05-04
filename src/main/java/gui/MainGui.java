@@ -8,6 +8,7 @@ import binarization.BinarizationOperations;
 import binarization.ColorChanger;
 import imageoperation.ImageReaderSaver;
 import org.jdesktop.layout.GroupLayout;
+import szkieletyzacja.ACM;
 import szkieletyzacja.KMM;
 
 import javax.swing.*;
@@ -98,6 +99,14 @@ public class MainGui extends JFrame {
     }
 
 
+    private void menuItemCNMinuncjeActionPerformed(ActionEvent e) {
+        ACM acm = new ACM();
+        originalImage = acm.crossingNumber(originalImage);
+        imageLabel.setIcon(new ImageIcon(originalImage));
+    }
+
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - exo
@@ -111,6 +120,7 @@ public class MainGui extends JFrame {
         menuItemOtsu = new JMenuItem();
         menu4 = new JMenu();
         menuItemKMM = new JMenuItem();
+        menuItemCNMinuncje = new JMenuItem();
         scrollPane1 = new JScrollPane();
         imageLabel = new JLabel();
 
@@ -168,6 +178,11 @@ public class MainGui extends JFrame {
                     menuItemKMMActionPerformed(e);
                 });
                 menu4.add(menuItemKMM);
+
+                //---- menuItemCNMinuncje ----
+                menuItemCNMinuncje.setText("CN minuncje");
+                menuItemCNMinuncje.addActionListener(e -> menuItemCNMinuncjeActionPerformed(e));
+                menu4.add(menuItemCNMinuncje);
             }
             menuBar1.add(menu4);
         }
@@ -211,6 +226,7 @@ public class MainGui extends JFrame {
     private JMenuItem menuItemOtsu;
     private JMenu menu4;
     private JMenuItem menuItemKMM;
+    private JMenuItem menuItemCNMinuncje;
     private JScrollPane scrollPane1;
     private JLabel imageLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
