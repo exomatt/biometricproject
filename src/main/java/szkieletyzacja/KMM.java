@@ -59,16 +59,24 @@ public class KMM {
                 }
             }
         }
+        for (int w = 1; w < table.length - 1; w++) {
+            for (int h = 1; h < table[0].length - 1; h++) {
+                if (table[w][h] > 0) {
 
-        // łapiemy czwórki
-        for (int h = 0; h < table[0].length; h++) {
-            for (int w = 0; w < table.length; w++) {
-                System.out.print(table[w][h]);
+                }
             }
-            System.out.println("");
+            // łapiemy czwórki
+
+
+            // wypisanie
+            for (int h = 0; h < table[0].length; h++) {
+                for (int w = 0; w < table.length; w++) {
+                    System.out.print(table[w][h]);
+                }
+                System.out.println("");
+            }
+            return null;
         }
-        return null;
-    }
 
     public static BufferedImage copyImage(BufferedImage source) {
         BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
