@@ -27,15 +27,48 @@ public class KMM {
 
     public BufferedImage kmmAlgorithm(BufferedImage image) {
         int table[][] = new int[image.getWidth()][image.getWidth()];
-        for (int w = 0; w < table.length; w++) {
-            for (int h = 0; h < table[0].length; h++) {
+        // łapiemy początkowe czarne
+        for (int w = 0; w < table.length - 1; w++) {
+            for (int h = 0; h < table[0].length - 1; h++) {
                 Color color = new Color(image.getRGB(w, h));
                 if (color.getRed() == 255)
                     table[w][h] = 1;
                 else table[w][h] = 0;
             }
         }
+        // łapiemy dwójki
+        for (int w = 1; w < table.length - 2
+                ; w++) {
+            for (int h = 1; h < table[0].length - 2; h++) {
+                if (table[w][h] == 1) {
+                    if (table[w - 1][h - 1] == 0 ||
+                            table[w - 1][h] == 0 || table[w - 1][h + 1] == 0 ||
+                            table[w][h - 1] == 0 || table[w][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h] == 0 || table[w + 1][h + 1] == 0)
+                        table[w][h] = 2;
+                }
+            }
+        }
 
+        // łapiemy w rogu czyli 3
+        for (int w = 1; w < table.length - 2
+                ; w++) {
+            for (int h = 1; h < table[0].length - 2; h++) {
+                if (table[w][h] == 1) {
+                    if ((table[w - 1][h] > 0 && table[w + 1][h] > 0 && table[w][h - 1] > 0 && table[w][h + 1] > 0)
+                            && (table[w - 1][h - 1] == 0 || table[w - 1][h + 1] == 0 || table[w + 1][h - 1] == 0 || table[w + 1][h + 1] == 0))
+                        table[w][h] = 3;
+                }
+            }
+        }
+
+        // łapiemy czwórki
+
+        for (int w = 0; w < table.length; w++) {
+            for (int h = 0; h < table[0].length; h++) {
+                System.out.print(table[w][h]);
+            }
+            System.out.println("");
+        }
         return null;
     }
 

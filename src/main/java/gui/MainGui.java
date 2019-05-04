@@ -8,6 +8,7 @@ import binarization.BinarizationOperations;
 import binarization.ColorChanger;
 import imageoperation.ImageReaderSaver;
 import org.jdesktop.layout.GroupLayout;
+import szkieletyzacja.KMM;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -90,6 +91,15 @@ public class MainGui extends JFrame {
         imageLabel.setIcon(new ImageIcon(originalImage));
     }
 
+    private void menuItemKMMActionPerformed(ActionEvent e) {
+        KMM kmm = new KMM();
+        BufferedImage bufferedImage = kmm.kmmAlgorithm(copyImage(originalImage));
+        ImageShow imageShow = new ImageShow(bufferedImage);
+        imageShow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        imageShow.setVisible(true);
+    }
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - exo
@@ -102,7 +112,7 @@ public class MainGui extends JFrame {
         menu3 = new JMenu();
         menuItemOtsu = new JMenuItem();
         menu4 = new JMenu();
-        menuItem1 = new JMenuItem();
+        menuItemKMM = new JMenuItem();
         scrollPane1 = new JScrollPane();
         imageLabel = new JLabel();
 
@@ -154,9 +164,12 @@ public class MainGui extends JFrame {
             {
                 menu4.setText("szkieletyzacja");
 
-                //---- menuItem1 ----
-                menuItem1.setText("KMM");
-                menu4.add(menuItem1);
+                //---- menuItemKMM ----
+                menuItemKMM.setText("KMM");
+                menuItemKMM.addActionListener(e -> {
+                    menuItemKMMActionPerformed(e);
+                });
+                menu4.add(menuItemKMM);
             }
             menuBar1.add(menu4);
         }
@@ -199,7 +212,7 @@ public class MainGui extends JFrame {
     private JMenu menu3;
     private JMenuItem menuItemOtsu;
     private JMenu menu4;
-    private JMenuItem menuItem1;
+    private JMenuItem menuItemKMM;
     private JScrollPane scrollPane1;
     private JLabel imageLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables

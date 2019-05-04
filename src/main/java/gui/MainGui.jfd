@@ -52,8 +52,10 @@ new FormModel {
 					name: "menu4"
 					"text": "szkieletyzacja"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem1"
+						name: "menuItemKMM"
 						"text": "KMM"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "menuItem1ActionPerformed", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "menuItemKMMActionPerformed", true ) )
 					} )
 				} )
 			}
